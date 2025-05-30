@@ -1,116 +1,245 @@
 <?php include 'app/views/shares/header.php'; ?>
 
+<div class="container py-4">
+    <!-- Page Header -->
+    <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-4 pb-2 border-bottom">
+        <h2 class="fw-bold text-primary">
+            <i class="fas fa-list-ul me-2"></i>Danh sách sản phẩm
+        </h2>
+        <div class="d-flex mt-3 mt-md-0">
+            <a href="/webbanhang/Product/add" class="btn btn-custom-primary">
+                <i class="fas fa-plus-circle me-2"></i>Thêm sản phẩm mới
+            </a>
+        </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light"><i class="fas fa-search"></i></span>
+                        <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select id="categoryFilter" class="form-select">
+                        <option value="">Tất cả danh mục</option>
+                        <!-- Có thể thêm các option từ PHP -->
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select id="sortOrder" class="form-select">
+                        <option value="name_asc">Tên (A-Z)</option>
+                        <option value="name_desc">Tên (Z-A)</option>
+                        <option value="price_asc">Giá (Thấp - Cao)</option>
+                        <option value="price_desc">Giá (Cao - Thấp)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+        <?php foreach ($products as $product): ?>
+            <div class="col product-item">
+                <div class="card h-100 shadow-sm hover-shadow">
+                    <!-- Product Image -->
+                    <div class="card-img-container position-relative" style="height: 200px; overflow: hidden;">
+                        <?php if ($product->image): ?>
+                            <img src="/webbanhang/<?php echo htmlspecialchars($product->image, ENT_QUOTES, 'UTF-8'); ?>"
+                                class="card-img-top h-100 w-100 object-fit-cover"
+                                alt="<?php echo htmlspecialchars($product->name, ENT_QUOTES, 'UTF-8'); ?>">
+                        <?php else: ?>
+                            <div class="bg-light d-flex align-items-center justify-content-center h-100">
+                                <i class="fas fa-image fa-3x text-secondary"></i>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Product Info -->
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-truncate">
+                            <a href="/webbanhang/Product/show/<?php echo $product->id; ?>"
+                                class="text-decoration-none">
+                                <?php echo htmlspecialchars($product->name, ENT_QUOTES, 'UTF-8'); ?>
+                            </a>
+                        </h5>
+                        <p class="card-text small text-muted mb-2 product-category">
+                            <i class="fas fa-tag me-1"></i>
+                            <?php echo htmlspecialchars($product->category_name, ENT_QUOTES, 'UTF-8'); ?>
+                        </p>
+                        <p class="card-text product-description text-truncate">
+                            <?php echo htmlspecialchars($product->description, ENT_QUOTES, 'UTF-8'); ?>
+                        </p>
+                        <h6 class="fw-bold text-primary mb-0">
+                            <?php echo number_format($product->price, 0, ',', '.'); ?> VND
+                        </h6>
+                    </div>
+
+                    <!-- Product Actions -->
+                    <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
+                        <a href="/webbanhang/Product/edit/<?php echo $product->id; ?>"
+                            class="btn btn-sm btn-outline-primary action-btn">
+                            <i class="fas fa-edit me-1"></i>Sửa
+                        </a>
+                        <a href="/webbanhang/Product/delete/<?php echo $product->id; ?>"
+                            class="btn btn-sm btn-outline-danger action-btn delete-btn"
+                            data-id="<?php echo $product->id; ?>">
+                            <i class="fas fa-trash-alt me-1"></i>Xóa
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Empty State -->
+    <?php if (empty($products)): ?>
+        <div class="text-center py-5">
+            <div class="mb-3">
+                <i class="fas fa-box-open fa-4x text-secondary"></i>
+            </div>
+            <h3>Không có sản phẩm nào</h3>
+            <p class="text-muted">Hãy thêm sản phẩm mới để bắt đầu.</p>
+            <a href="/webbanhang/Product/add" class="btn btn-custom-primary mt-3">
+                <i class="fas fa-plus-circle me-2"></i>Thêm sản phẩm
+            </a>
+        </div>
+    <?php endif; ?>
+</div>
+
 <style>
-    body {
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12) !important;
+        transition: all 0.3s ease;
+    }
+
+    .card {
+        transition: all 0.3s ease;
+        border-radius: 10px;
+    }
+
+    .card-img-container {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
         background-color: #f8f9fa;
     }
-    .container-list {
-        max-width: 900px;
-        margin: 40px auto;
-        padding: 20px 30px;
-        background-color: #fff;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+
+    .card-title a {
+        color: var(--dark-color);
     }
-    h1 {
-        font-weight: 700;
-        color: #343a40;
-        margin-bottom: 20px;
-        text-align: center;
+
+    .card-title a:hover {
+        color: var(--primary-color);
     }
-    .btn-success {
-        display: block;
-        width: 200px;
-        margin: 0 auto 30px auto;
-        font-weight: 600;
-        font-size: 18px;
-        border-radius: 8px;
-        padding: 10px;
+
+    .btn-custom-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: white;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: all 0.3s ease;
     }
-    .list-group-item {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 20px;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 15px;
-        box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
-        background-color: #fff;
-        transition: box-shadow 0.3s ease;
+
+    .btn-custom-primary:hover {
+        background-color: #2980b9;
+        border-color: #2980b9;
+        color: white;
     }
-    .list-group-item:hover {
-        box-shadow: 0 6px 20px rgb(0 0 0 / 0.15);
+    
+    .action-btn {
+        position: relative;
+        z-index: 10;
+        transition: all 0.2s ease;
     }
-    .product-image {
-        flex: 0 0 100px;
-        max-width: 100px;
-        border-radius: 8px;
-        object-fit: cover;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    
+    .action-btn:hover {
+        transform: translateY(-3px);
     }
-    .product-info {
-        flex: 1 1 auto;
-        min-width: 300px;
-    }
-    .product-info h2 {
-        margin: 0 0 10px 0;
-        font-size: 22px;
-    }
-    .product-info h2 a {
-        color: #007bff;
-        text-decoration: none;
-    }
-    .product-info h2 a:hover {
-        text-decoration: underline;
-    }
-    .product-info p {
-        margin: 4px 0;
-        color: #555;
-        font-size: 15px;
-    }
-    .product-actions {
-        flex: 0 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        min-width: 110px;
-    }
-    .btn-warning, .btn-danger {
-        font-weight: 600;
-        border-radius: 8px;
-        padding: 8px;
-        font-size: 14px;
-        width: 100%;
-        text-align: center;
+    
+    .delete-btn:hover {
+        background-color: var(--danger-color);
+        border-color: var(--danger-color);
+        color: white;
     }
 </style>
 
-<div class="container-list">
-    <h1>Danh sách sản phẩm</h1>
-    <a href="/webbanhang/Product/add" class="btn btn-success">Thêm sản phẩm mới</a>
-    <ul class="list-group">
-        <?php foreach ($products as $product): ?>
-            <li class="list-group-item">
-                <?php if ($product->image): ?>
-                    <img src="/webbanhang/<?php echo htmlspecialchars($product->image, ENT_QUOTES, 'UTF-8'); ?>" alt="Product Image" class="product-image">
-                <?php else: ?>
-                    <div style="width:100px; height:100px; background:#eee; border-radius:8px;"></div>
-                <?php endif; ?>
-                <div class="product-info">
-                    <h2><a href="/webbanhang/Product/show/<?php echo $product->id; ?>"><?php
-                       echo htmlspecialchars($product->name, ENT_QUOTES, 'UTF-8'); ?></a></h2>
-                    <p><?php echo htmlspecialchars($product->description, ENT_QUOTES, 'UTF-8'); ?></p>
-                    <p><strong>Giá:</strong> <?php echo number_format($product->price, 0, ',', '.'); ?> VND</p>
-                    <p><strong>Danh mục:</strong> <?php echo htmlspecialchars($product->category_name, ENT_QUOTES, 'UTF-8'); ?></p>
-                </div>
-                <div class="product-actions">
-                    <a href="/webbanhang/Product/edit/<?php echo $product->id; ?>" class="btn btn-warning">Sửa</a>
-                    <a href="/webbanhang/Product/delete/<?php echo $product->id; ?>" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
-                </div>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-</div>
+<!-- Filter and Sort JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', filterProducts);
+
+        // Category filter
+        const categoryFilter = document.getElementById('categoryFilter');
+        categoryFilter.addEventListener('change', filterProducts);
+
+        // Sort functionality
+        const sortOrder = document.getElementById('sortOrder');
+        sortOrder.addEventListener('change', sortProducts);
+        
+        // Xử lý nút xóa sản phẩm
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+                    window.location.href = this.getAttribute('href');
+                }
+            });
+        });
+
+        function filterProducts() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const category = categoryFilter.value.toLowerCase();
+            const productItems = document.querySelectorAll('.product-item');
+
+            productItems.forEach(item => {
+                const title = item.querySelector('.card-title').textContent.toLowerCase();
+                const description = item.querySelector('.product-description').textContent.toLowerCase();
+                const productCategory = item.querySelector('.product-category').textContent.toLowerCase();
+
+                const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+                const matchesCategory = category === '' || productCategory.includes(category);
+
+                if (matchesSearch && matchesCategory) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function sortProducts() {
+            const products = Array.from(document.querySelectorAll('.product-item'));
+            const productsContainer = document.querySelector('.row-cols-1');
+            const sortType = sortOrder.value;
+
+            products.sort((a, b) => {
+                if (sortType === 'name_asc') {
+                    return a.querySelector('.card-title').textContent.localeCompare(b.querySelector('.card-title').textContent);
+                } else if (sortType === 'name_desc') {
+                    return b.querySelector('.card-title').textContent.localeCompare(a.querySelector('.card-title').textContent);
+                } else if (sortType === 'price_asc' || sortType === 'price_desc') {
+                    const priceA = parseFloat(a.querySelector('h6').textContent.replace(/[^\d]/g, ''));
+                    const priceB = parseFloat(b.querySelector('h6').textContent.replace(/[^\d]/g, ''));
+
+                    return sortType === 'price_asc' ? priceA - priceB : priceB - priceA;
+                }
+                return 0;
+            });
+
+            products.forEach(product => productsContainer.appendChild(product));
+        }
+    });
+</script>
 
 <?php include 'app/views/shares/footer.php'; ?>

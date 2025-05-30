@@ -1,49 +1,68 @@
-<footer class="bg-light text-center text-lg-start mt-4 shadow-sm">
-    <div class="container py-4">
-        <div class="row">
-            <!-- Giới thiệu -->
-            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                <h5 class="text-uppercase font-weight-bold">🛍️ Quản lý sản phẩm</h5>
-                <p class="text-muted">
-                    Hệ thống giúp bạn theo dõi, cập nhật và quản lý sản phẩm một cách dễ dàng, nhanh chóng và hiệu quả.
+</div> <!-- Đóng container từ header -->
+
+<footer class="mt-5 pt-4 pb-3 bg-dark text-white">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Thông tin hệ thống -->
+            <div class="col-md-4">
+                <h5 class="mb-3 fw-bold">Hệ thống quản lý sản phẩm</h5>
+                <p class="mb-3">Giải pháp quản lý sản phẩm chuyên nghiệp, dễ dàng và hiệu quả cho doanh nghiệp của bạn.
+                </p>
+                <p class="mb-0">
+                    <small class="text-muted">© 2025 Quản lý sản phẩm. All rights reserved.</small>
                 </p>
             </div>
 
             <!-- Liên kết nhanh -->
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase font-weight-bold">Liên kết nhanh</h5>
+            <div class="col-md-4">
+                <h5 class="mb-3 fw-bold">Liên kết nhanh</h5>
                 <ul class="list-unstyled">
-                    <li>
-                        <a href="/webbanhang/Product/" class="text-dark text-decoration-none d-block py-1 hover-underline">📋 Danh sách sản phẩm</a>
+                    <li class="mb-2">
+                        <a href="/webbanhang/Product/index" class="text-decoration-none text-light">
+                            <i class="fas fa-chevron-right me-1 small"></i> Danh sách sản phẩm
+                        </a>
                     </li>
-                    <li>
-                        <a href="/webbanhang/Product/add" class="text-dark text-decoration-none d-block py-1 hover-underline">➕ Thêm sản phẩm</a>
+                    <li class="mb-2">
+                        <a href="/webbanhang/Product/add" class="text-decoration-none text-light">
+                            <i class="fas fa-chevron-right me-1 small"></i> Thêm sản phẩm mới
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="/webbanhang/Category/index" class="text-decoration-none text-light">
+                            <i class="fas fa-chevron-right me-1 small"></i> Quản lý danh mục
+                        </a>
                     </li>
                 </ul>
             </div>
 
-            <!-- Mạng xã hội -->
-            <div class="col-lg-3 col-md-6">
-                <h5 class="text-uppercase font-weight-bold">Kết nối với chúng tôi</h5>
-                <div class="d-flex justify-content-center justify-content-md-start mt-2">
-                    <a href="#" class="text-dark mx-2" title="Facebook">
-                        <i class="fab fa-facebook fa-lg"></i>
-                    </a>
-                    <a href="#" class="text-dark mx-2" title="Twitter">
-                        <i class="fab fa-twitter fa-lg"></i>
-                    </a>
-                    <a href="#" class="text-dark mx-2" title="Instagram">
-                        <i class="fab fa-instagram fa-lg"></i>
-                    </a>
+            <!-- Liên hệ -->
+            <div class="col-md-4">
+                <h5 class="mb-3 fw-bold">Liên hệ</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-map-marker-alt me-2"></i> 
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-phone me-2"></i> 
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-envelope me-2"></i> i
+                    </li>
+                </ul>
+                <!-- Social Media Icons -->
+                <div class="mt-3">
+                    <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="text-center p-3 bg-dark text-white mt-4">
-        © 2025 Quản lý sản phẩm. All rights reserved.
-    </div>
 </footer>
 
-<!-- FontAwesome 6 -->
-<script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
