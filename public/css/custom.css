@@ -1,0 +1,114 @@
+/* Custom styles for Võ Hoàng Quân Store */
+
+:root {
+    --vhq-primary: #3a5f8a;
+    --vhq-secondary: #f0ae2c;
+    --vhq-accent: #e55934;
+    --vhq-dark: #2c3e50;
+    --vhq-light: #ecf0f1;
+}
+
+/* Gradient background for login and register pages */
+.gradient-custom {
+    background: linear-gradient(to right, var(--vhq-primary), var(--vhq-accent));
+}
+
+/* Brand styles */
+.navbar-brand {
+    color: var(--vhq-primary) !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Card hover effect */
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-color: rgba(58, 95, 138, 0.1);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Button styles */
+.btn-primary {
+    background-color: var(--vhq-primary);
+    border-color: var(--vhq-primary);
+}
+
+.btn-primary:hover {
+    background-color: #2c4b6e;
+    border-color: #2c4b6e;
+}
+
+.btn-secondary {
+    background-color: var(--vhq-secondary);
+    border-color: var(--vhq-secondary);
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background-color: #d99b1e;
+    border-color: #d99b1e;
+    color: #333;
+}
+
+/* Form styling */
+.form-floating>.form-control:focus~label,
+.form-floating>.form-control:not(:placeholder-shown)~label {
+    color: #495057;
+}
+
+/* Improved validation styling */
+.was-validated .form-control:invalid {
+    border-color: var(--vhq-accent);
+    box-shadow: 0 0 0 0.2rem rgba(229, 89, 52, 0.25);
+}
+
+.was-validated .form-control:valid {
+    border-color: #1cc88a;
+    box-shadow: 0 0 0 0.2rem rgba(28, 200, 138, 0.25);
+}
+
+/* Checkout form styling */
+.checkout-form label {
+    font-weight: 500;
+}
+
+/* Footer styling */
+footer {
+    background-color: var(--vhq-dark);
+    color: var(--vhq-light);
+}
+
+/* Store brand badge */
+.vhq-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--vhq-primary);
+    color: white;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* Order confirmation success icon */
+.success-animation {
+    animation-duration: 2.5s;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+    color: var(--vhq-secondary);
+}
+
+/* Custom cards */
+.card-vhq {
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+.card-vhq .card-header {
+    background-color: var(--vhq-primary);
+    color: white;
+    border-radius: 10px 10px 0 0;
+}

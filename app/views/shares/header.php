@@ -10,11 +10,11 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
+    <link href="/webbanhang/public/css/custom.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #3498db;
             --secondary-color: #2ecc71;
-            --dark-color: #34495e;
             --light-color: #ecf0f1;
             --danger-color: #e74c3c;
             --warning-color: #f39c12;
@@ -94,7 +94,7 @@
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
             <a class="navbar-brand" href="/webbanhang/">
-                <i class="fas fa-box-open me-2"></i>Quản lý sản phẩm
+                <i class="fas fa-box-open me-2"></i>Võ Hoàng Quân store
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,6 +112,24 @@
                             <i class="fas fa-plus-circle nav-icon"></i>Thêm sản phẩm
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <?php if (SessionHelper::isLoggedIn()): ?>
+                            <a class="nav-link">
+                                <i class="fas fa-user nav-icon"></i><?php echo htmlspecialchars($_SESSION['username']) . " (" . SessionHelper::getRole() . ")"; ?>
+                            </a>
+                        <?php else: ?>
+                            <a class="nav-link" href="/webbanhang/account/login">
+                                <i class="fas fa-sign-in-alt nav-icon"></i>Đăng nhập
+                            </a>
+                        <?php endif; ?>
+                    </li>
+                    <?php if (SessionHelper::isLoggedIn()): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/webbanhang/account/logout">
+                            <i class="fas fa-sign-out-alt nav-icon"></i>Đăng xuất
+                        </a>
+                    </li>
+                    <?php endif; ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -127,4 +145,4 @@
         </div>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-4"></div>

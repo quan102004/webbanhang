@@ -1,6 +1,12 @@
 <?php
+// Võ Hoàng Quân Store
 session_start();
+
+// Sửa đường dẫn đến file SessionHelper.php
+require_once("app/helpers/SessionHelper.php");  // Thay vì app/config/SessionHelper.php
+
 require_once 'app/models/ProductModel.php';
+
 $url = $_GET['url'] ?? '';
 $url = rtrim($url, '/');
 $url = filter_var($url, FILTER_SANITIZE_URL);

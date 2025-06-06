@@ -96,17 +96,19 @@
                         <div class="btn-group w-100">
                             <a href="/webbanhang/Product/addToCart/<?php echo $product->id; ?>"
                                 class="btn btn-sm btn-outline-success action-btn add-to-cart-main">
-                                <i class="fas fa-cart-plus me-1"></i>Thêm vào giỏ
+                            <i class="fas fa-cart-plus me-1"></i>Thêm vào giỏ
                             </a>
-                            <a href="/webbanhang/Product/edit/<?php echo $product->id; ?>"
-                                class="btn btn-sm btn-outline-primary action-btn">
-                                <i class="fas fa-edit me-1"></i>Sửa
-                            </a>
-                            <a href="/webbanhang/Product/delete/<?php echo $product->id; ?>"
-                                class="btn btn-sm btn-outline-danger action-btn delete-btn"
-                                data-id="<?php echo $product->id; ?>">
-                                <i class="fas fa-trash-alt me-1"></i>Xóa
-                            </a>
+                                <?php if (SessionHelper::isAdmin()): ?>
+                                    <a href="/webbanhang/Product/edit/<?php echo $product->id; ?>"
+                                        class="btn btn-sm btn-outline-primary action-btn">
+                                        <i class="fas fa-edit me-1"></i>Sửa
+                                    </a>
+                                    <a href="/webbanhang/Product/delete/<?php echo $product->id; ?>"
+                                        class="btn btn-sm btn-outline-danger action-btn delete-btn"
+                                        data-id="<?php echo $product->id; ?>">
+                                        <i class="fas fa-trash-alt me-1"></i>Xóa
+                                    </a>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
