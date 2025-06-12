@@ -1,419 +1,226 @@
 <?php include 'app/views/shares/header.php'; ?>
 
 <div class="container py-4">
-    <!-- Page Header -->
-    <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-4 pb-2 border-bottom">
-        <h2 class="fw-bold text-primary">
-            <i class="fas fa-list-ul me-2"></i>Danh sách sản phẩm
-        </h2>
-        <div class="d-flex mt-3 mt-md-0">
-            <a href="/webbanhang/Product/cart" class="btn btn-outline-primary me-2">
-                <i class="fas fa-shopping-cart me-2"></i>Giỏ hàng
-                <?php if(isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
-                <span class="badge bg-danger"><?php echo count($_SESSION['cart']); ?></span>
-                <?php endif; ?>
-            </a>
-            <a href="/webbanhang/Product/add" class="btn btn-custom-primary">
-                <i class="fas fa-plus-circle me-2"></i>Thêm sản phẩm mới
-            </a>
-        </div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5 fw-bold text-primary"><i class="fas fa-boxes me-2"></i>Danh sách sản phẩm</h1>
+        <a href="/webbanhang/Product/add" class="btn btn-success d-flex align-items-center">
+            <i class="fas fa-plus-circle me-2"></i>Thêm sản phẩm mới
+        </a>
     </div>
 
-    <!-- Search and Filter Section -->
-    <div class="card shadow-sm mb-4">
-        <div class="card-body">
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <span class="input-group-text bg-light"><i class="fas fa-search"></i></span>
-                        <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm...">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <select id="categoryFilter" class="form-select">
-                        <option value="">Tất cả danh mục</option>
-                        <!-- Có thể thêm các option từ PHP -->
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <select id="sortOrder" class="form-select">
-                        <option value="name_asc">Tên (A-Z)</option>
-                        <option value="name_desc">Tên (Z-A)</option>
-                        <option value="price_asc">Giá (Thấp - Cao)</option>
-                        <option value="price_desc">Giá (Cao - Thấp)</option>
-                    </select>
-                </div>
+    <div class="row mb-4">
+        <div class="col-md-6 col-lg-4">
+            <div class="input-group">
+                <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                <input type="text" id="product-search" class="form-control border-start-0" placeholder="Tìm kiếm sản phẩm...">
             </div>
         </div>
     </div>
 
-    <!-- Products Grid -->
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
-        <?php foreach ($products as $product): ?>
-            <div class="col product-item">
-                <div class="card h-100 shadow-sm hover-shadow">
-                    <!-- Product Image -->
-                    <div class="card-img-container position-relative" style="height: 200px; overflow: hidden;">
-                        <?php if ($product->image): ?>
-                            <img src="/webbanhang/<?php echo htmlspecialchars($product->image, ENT_QUOTES, 'UTF-8'); ?>"
-                                class="card-img-top h-100 w-100 object-fit-cover"
-                                alt="<?php echo htmlspecialchars($product->name, ENT_QUOTES, 'UTF-8'); ?>">
-                        <?php else: ?>
-                            <div class="bg-light d-flex align-items-center justify-content-center h-100">
-                                <i class="fas fa-image fa-3x text-secondary"></i>
-                            </div>
-                        <?php endif; ?>
-                        
-                        <!-- Added: Quick Add to Cart Button -->
-                        <a href="/webbanhang/Product/addToCart/<?php echo $product->id; ?>" 
-                           class="btn btn-sm btn-success position-absolute top-0 end-0 m-2 add-to-cart-btn">
-                            <i class="fas fa-cart-plus"></i>
-                        </a>
-                    </div>
-
-                    <!-- Product Info -->
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-truncate">
-                            <a href="/webbanhang/Product/show/<?php echo $product->id; ?>"
-                                class="text-decoration-none">
-                                <?php echo htmlspecialchars($product->name, ENT_QUOTES, 'UTF-8'); ?>
-                            </a>
-                        </h5>
-                        <p class="card-text small text-muted mb-2 product-category">
-                            <i class="fas fa-tag me-1"></i>
-                            <?php echo htmlspecialchars($product->category_name, ENT_QUOTES, 'UTF-8'); ?>
-                        </p>
-                        <p class="card-text product-description text-truncate">
-                            <?php echo htmlspecialchars($product->description, ENT_QUOTES, 'UTF-8'); ?>
-                        </p>
-                        <h6 class="fw-bold text-primary mb-0">
-                            <?php echo number_format($product->price, 0, ',', '.'); ?> VND
-                        </h6>
-                    </div>
-
-                    <!-- Product Actions -->
-                    <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
-                        <div class="btn-group w-100">
-                            <a href="/webbanhang/Product/addToCart/<?php echo $product->id; ?>"
-                                class="btn btn-sm btn-outline-success action-btn add-to-cart-main">
-                            <i class="fas fa-cart-plus me-1"></i>Thêm vào giỏ
-                            </a>
-                                <?php if (SessionHelper::isAdmin()): ?>
-                                    <a href="/webbanhang/Product/edit/<?php echo $product->id; ?>"
-                                        class="btn btn-sm btn-outline-primary action-btn">
-                                        <i class="fas fa-edit me-1"></i>Sửa
-                                    </a>
-                                    <a href="/webbanhang/Product/delete/<?php echo $product->id; ?>"
-                                        class="btn btn-sm btn-outline-danger action-btn delete-btn"
-                                        data-id="<?php echo $product->id; ?>">
-                                        <i class="fas fa-trash-alt me-1"></i>Xóa
-                                    </a>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
+    <div class="row" id="product-container">
+        <!-- Danh sách sản phẩm sẽ được tải từ API và hiển thị tại đây -->
     </div>
-
-    <!-- Empty State -->
-    <?php if (empty($products)): ?>
-        <div class="text-center py-5">
-            <div class="mb-3">
-                <i class="fas fa-box-open fa-4x text-secondary"></i>
-            </div>
-            <h3>Không có sản phẩm nào</h3>
-            <p class="text-muted">Hãy thêm sản phẩm mới để bắt đầu.</p>
-            <a href="/webbanhang/Product/add" class="btn btn-custom-primary mt-3">
-                <i class="fas fa-plus-circle me-2"></i>Thêm sản phẩm
-            </a>
-        </div>
-    <?php endif; ?>
 </div>
 
-<style>
-    .hover-shadow:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12) !important;
-        transition: all 0.3s ease;
-    }
+<?php include 'app/views/shares/footer.php'; ?>
 
-    .card {
-        transition: all 0.3s ease;
-        border-radius: 10px;
-    }
-
-    .card-img-container {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        background-color: #f8f9fa;
-        position: relative;
-    }
-
-    .card-title a {
-        color: var(--dark-color);
-    }
-
-    .card-title a:hover {
-        color: var(--primary-color);
-    }
-
-    .btn-custom-primary {
-        background-color: var(--primary-color);
-        border-color: var(--primary-color);
-        color: white;
-        font-weight: 500;
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        transition: all 0.3s ease;
-    }
-
-    .btn-custom-primary:hover {
-        background-color: #2980b9;
-        border-color: #2980b9;
-        color: white;
-    }
-    
-    .action-btn {
-        position: relative;
-        z-index: 10;
-        transition: all 0.2s ease;
-        font-size: 0.8rem;
-        padding: 0.375rem 0.5rem;
-    }
-    
-    .action-btn:hover {
-        transform: translateY(-3px);
-    }
-    
-    .delete-btn:hover {
-        background-color: var(--danger-color);
-        border-color: var(--danger-color);
-        color: white;
-    }
-    
-    .btn-outline-success:hover {
-        background-color: #28a745;
-        border-color: #28a745;
-        color: white;
-    }
-    
-    .badge {
-        position: relative;
-        top: -1px;
-    }
-    
-    /* New styles for add to cart button */
-    .add-to-cart-btn {
-        opacity: 0;
-        transition: all 0.3s ease;
-        z-index: 20;
-        border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    
-    .card:hover .add-to-cart-btn {
-        opacity: 1;
-    }
-    
-    /* Animation for add to cart */
-    @keyframes addedToCart {
-        0% {transform: scale(1);}
-        50% {transform: scale(1.5);}
-        100% {transform: scale(1);}
-    }
-    
-    .added-animation {
-        animation: addedToCart 0.5s ease;
-    }
-    
-    /* Cart badge animation */
-    @keyframes cartBadgePulse {
-        0% {transform: scale(1);}
-        50% {transform: scale(1.3);}
-        100% {transform: scale(1);}
-    }
-    
-    .cart-badge-animation {
-        animation: cartBadgePulse 0.5s ease;
-    }
-</style>
-
-<!-- Filter and Sort JavaScript -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Search functionality
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', filterProducts);
+document.addEventListener("DOMContentLoaded", function () {
+    const productContainer = document.getElementById('product-container');
+    const searchInput = document.getElementById('product-search');
+    let allProducts = [];
+    
+    // Load products
+    fetch('/webbanhang/api/product')
+        .then(response => response.json())
+        .then(data => {
+            allProducts = data;
+            renderProducts(data);
 
-        // Category filter
-        const categoryFilter = document.getElementById('categoryFilter');
-        categoryFilter.addEventListener('change', filterProducts);
-
-        // Sort functionality
-        const sortOrder = document.getElementById('sortOrder');
-        sortOrder.addEventListener('change', sortProducts);
-        
-        // Xử lý nút xóa sản phẩm
-        const deleteButtons = document.querySelectorAll('.delete-btn');
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
-                    window.location.href = this.getAttribute('href');
-                }
+            // Enable search functionality
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const filteredProducts = allProducts.filter(product => 
+                    product.name.toLowerCase().includes(searchTerm) || 
+                    product.description.toLowerCase().includes(searchTerm) ||
+                    product.category_name.toLowerCase().includes(searchTerm)
+                );
+                renderProducts(filteredProducts);
             });
         });
-        
-        // Xử lý tất cả các nút thêm vào giỏ hàng
-        const allAddToCartButtons = document.querySelectorAll('a[href^="/webbanhang/Product/addToCart/"]');
-        allAddToCartButtons.forEach(button => {
-            button.addEventListener('click', handleAddToCart);
+
+    function renderProducts(products) {
+        productContainer.innerHTML = '';
+
+        if (products.length === 0) {
+            productContainer.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <div class="text-muted">
+                        <i class="fas fa-search fa-3x mb-3"></i>
+                        <h4>Không tìm thấy sản phẩm</h4>
+                        <p>Vui lòng thử lại với từ khóa khác</p>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        products.forEach(product => {
+            const productCol = document.createElement('div');
+            productCol.className = 'col-md-6 col-lg-4 mb-4';
+            
+            // Format price with commas
+            const formattedPrice = new Intl.NumberFormat('vi-VN').format(product.price);
+            
+            // Truncate description if too long
+            const shortDesc = product.description.length > 80 ? 
+                product.description.substring(0, 80) + '...' : product.description;
+            
+            productCol.innerHTML = `
+                <div class="card product-card h-100 shadow-sm border">
+                    <div class="card-header bg-white border-bottom-0 pt-3 pb-0">
+                        <span class="badge bg-info float-end">${product.category_name}</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="/webbanhang/Product/show/${product.id}" class="text-decoration-none text-dark">${product.name}</a>
+                        </h5>
+                        <p class="card-text text-muted small">${shortDesc}</p>
+                        <h4 class="text-primary fw-bold">${formattedPrice} VND</h4>
+                    </div>                    <div class="card-footer bg-white border-top-0">
+                        <?php if (SessionHelper::isLoggedIn()): ?>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <button class="btn btn-primary w-100" onclick="addToCart(${product.id})">
+                                <i class="fas fa-cart-plus me-1"></i> Thêm vào giỏ
+                            </button>
+                        </div>
+                        <?php else: ?>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <a href="/webbanhang/account/login" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-sign-in-alt me-1"></i> Đăng nhập để mua
+                            </a>
+                        </div>
+                        <?php endif; ?>
+                        <?php if (SessionHelper::isAdmin()): ?>
+                        <div class="d-flex justify-content-between">
+                            <a href="/webbanhang/Product/edit/${product.id}" class="btn btn-outline-warning btn-sm">
+                                <i class="fas fa-edit me-1"></i> Sửa
+                            </a>
+                            <button class="btn btn-outline-danger btn-sm" onclick="deleteProduct(${product.id})">
+                                <i class="fas fa-trash-alt me-1"></i> Xóa
+                            </button>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            `;
+            productContainer.appendChild(productCol);
         });
-        
-        function handleAddToCart(e) {
-            e.preventDefault();
-            const cartUrl = this.getAttribute('href');
-            const isQuickAddBtn = this.classList.contains('add-to-cart-btn');
-            
-            // Hiệu ứng khi nhấn nút
-            if (isQuickAddBtn) {
-                this.classList.add('added-animation');
-                setTimeout(() => this.classList.remove('added-animation'), 500);
-            }
-            
-            // Hiệu ứng sản phẩm bay vào giỏ hàng
-            const productCard = this.closest('.card');
-            const productImg = productCard.querySelector('img')?.cloneNode(true) ||
-                               productCard.querySelector('.fa-image')?.cloneNode(true);
-            
-            if (productImg) {
-                // Tạo hiệu ứng sản phẩm bay vào giỏ hàng
-                const imgFly = document.createElement('div');
-                imgFly.classList.add('img-fly');
-                imgFly.style.cssText = `
-                    position: fixed;
-                    z-index: 9999;
-                    width: 50px;
-                    height: 50px;
-                    border-radius: 50%;
-                    overflow: hidden;
-                    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-                `;
-                
-                if (productImg.tagName === 'IMG') {
-                    imgFly.appendChild(productImg);
-                    productImg.style.cssText = 'width: 100%; height: 100%; object-fit: cover;';
+    }
+});
+
+function deleteProduct(id) {
+    Swal.fire({
+        title: 'Xác nhận xóa?',
+        text: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#e74c3c',
+        cancelButtonColor: '#7f8c8d',
+        confirmButtonText: 'Xóa',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/webbanhang/api/product/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Product deleted successfully') {
+                    Swal.fire({
+                        title: 'Đã xóa!',
+                        text: 'Sản phẩm đã được xóa thành công',
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        location.reload();
+                    });
                 } else {
-                    imgFly.style.backgroundColor = '#f8f9fa';
-                    imgFly.style.display = 'flex';
-                    imgFly.style.alignItems = 'center';
-                    imgFly.style.justifyContent = 'center';
-                    imgFly.appendChild(productImg);
-                }
-                
-                document.body.appendChild(imgFly);
-                
-                // Lấy vị trí của nút và giỏ hàng
-                const btnRect = this.getBoundingClientRect();
-                const cartIcon = document.querySelector('a[href="/webbanhang/Product/cart"]');
-                const cartIconRect = cartIcon.getBoundingClientRect();
-                
-                // Đặt vị trí bắt đầu
-                imgFly.style.top = btnRect.top + 'px';
-                imgFly.style.left = btnRect.left + 'px';
-                
-                // Animation
-                setTimeout(() => {
-                    imgFly.style.transition = 'all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)';
-                    imgFly.style.top = cartIconRect.top + 'px';
-                    imgFly.style.left = cartIconRect.left + 'px';
-                    imgFly.style.opacity = '0.5';
-                    imgFly.style.transform = 'scale(0.3)';
-                    
-                    setTimeout(() => {
-                        imgFly.remove();
-                        
-                        // Cập nhật giỏ hàng bằng Ajax để không reload trang
-                        fetch(cartUrl)
-                            .then(response => {
-                                // Hiệu ứng nhấp nháy cho badge giỏ hàng
-                                const badge = cartIcon.querySelector('.badge');
-                                if (badge) {
-                                    // Cập nhật số lượng và thêm hiệu ứng
-                                    const currentCount = parseInt(badge.textContent);
-                                    badge.textContent = currentCount + 1;
-                                    badge.classList.add('cart-badge-animation');
-                                    setTimeout(() => badge.classList.remove('cart-badge-animation'), 500);
-                                } else {
-                                    // Tạo badge mới nếu chưa có
-                                    const newBadge = document.createElement('span');
-                                    newBadge.className = 'badge bg-danger cart-badge-animation';
-                                    newBadge.textContent = '1';
-                                    cartIcon.appendChild(newBadge);
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Lỗi khi thêm vào giỏ hàng:', error);
-                            });
-                    }, 800);
-                }, 10);
-            } else {
-                // Nếu không có hình ảnh, gửi yêu cầu trực tiếp
-                fetch(cartUrl);
-            }
-        }
-
-        function filterProducts() {
-            const searchTerm = searchInput.value.toLowerCase();
-            const category = categoryFilter.value.toLowerCase();
-            const productItems = document.querySelectorAll('.product-item');
-
-            productItems.forEach(item => {
-                const title = item.querySelector('.card-title').textContent.toLowerCase();
-                const description = item.querySelector('.product-description').textContent.toLowerCase();
-                const productCategory = item.querySelector('.product-category').textContent.toLowerCase();
-
-                const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
-                const matchesCategory = category === '' || productCategory.includes(category);
-
-                if (matchesSearch && matchesCategory) {
-                    item.style.display = '';
-                } else {
-                    item.style.display = 'none';
+                    Swal.fire({
+                        title: 'Lỗi!',
+                        text: 'Xóa sản phẩm thất bại',
+                        icon: 'error'
+                    });
                 }
             });
-        }
-
-        function sortProducts() {
-            const products = Array.from(document.querySelectorAll('.product-item'));
-            const productsContainer = document.querySelector('.row-cols-1');
-            const sortType = sortOrder.value;
-
-            products.sort((a, b) => {
-                if (sortType === 'name_asc') {
-                    return a.querySelector('.card-title').textContent.localeCompare(b.querySelector('.card-title').textContent);
-                } else if (sortType === 'name_desc') {
-                    return b.querySelector('.card-title').textContent.localeCompare(a.querySelector('.card-title').textContent);
-                } else if (sortType === 'price_asc' || sortType === 'price_desc') {
-                    const priceA = parseFloat(a.querySelector('h6').textContent.replace(/[^\d]/g, ''));
-                    const priceB = parseFloat(b.querySelector('h6').textContent.replace(/[^\d]/g, ''));
-
-                    return sortType === 'price_asc' ? priceA - priceB : priceB - priceA;
-                }
-                return 0;
-            });
-
-            products.forEach(product => productsContainer.appendChild(product));
         }
     });
-</script>
+}
 
-<?php include 'app/views/shares/footer.php'; ?>
+function addToCart(id) {
+    // Hiệu ứng nút khi được click
+    const button = event.currentTarget;
+    const originalText = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Đang thêm...';
+    
+    // Gửi yêu cầu thêm sản phẩm vào giỏ hàng
+    fetch(`/webbanhang/Product/addToCart/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        // Kiểm tra nếu chuyển hướng đến trang đăng nhập (status 302)
+        if (response.redirected && response.url.includes('login')) {
+            window.location.href = response.url;
+            return;
+        }
+        
+        if (response.ok) {
+            // Hiển thị thông báo thành công
+            Swal.fire({
+                title: 'Đã thêm vào giỏ hàng!',
+                text: 'Sản phẩm đã được thêm vào giỏ hàng',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false
+            });
+            
+            // Hiển thị mini cart dropdown hoặc cập nhật số lượng sản phẩm trong giỏ hàng
+            updateCartCount();
+        } else {
+            throw new Error('Không thể thêm sản phẩm vào giỏ hàng');
+        }
+    })
+    .catch(error => {
+        console.error('Lỗi:', error);
+        Swal.fire({
+            title: 'Lỗi!',
+            text: 'Không thể thêm sản phẩm vào giỏ hàng',
+            icon: 'error'
+        });
+    })
+    .finally(() => {
+        // Khôi phục trạng thái nút
+        button.disabled = false;
+        button.innerHTML = originalText;
+    });
+}
+
+// Hàm cập nhật số lượng sản phẩm trong giỏ hàng trên thanh điều hướng
+function updateCartCount() {
+    fetch('/webbanhang/Product/getCartCount')
+        .then(response => response.json())
+        .then(data => {
+            const cartCountElement = document.getElementById('cart-count');
+            if (cartCountElement) {
+                cartCountElement.textContent = data.count;
+                cartCountElement.style.display = data.count > 0 ? 'inline-block' : 'none';
+            }
+        })
+        .catch(error => console.error('Lỗi khi cập nhật giỏ hàng:', error));
+}
+</script>

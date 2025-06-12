@@ -1,152 +1,204 @@
 <?php include 'app/views/shares/header.php'; ?>
 
 <div class="container py-4">
-    <!-- Page Header -->
-    <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mb-4 pb-2 border-bottom">
-        <h2 class="fw-bold text-primary">
-            <i class="fas fa-plus-circle me-2"></i>Thêm sản phẩm mới
-        </h2>
-        <div class="d-flex mt-3 mt-md-0">
-            <a href="/webbanhang/Product/index" class="btn btn-outline-secondary">
-                <i class="fas fa-arrow-left me-2"></i>Quay lại danh sách
-            </a>
-        </div>
-    </div>
-
-    <!-- Hiển thị lỗi nếu có -->
-    <?php if (!empty($errors)): ?>
-        <div class="alert alert-danger shadow-sm">
-            <i class="fas fa-exclamation-triangle me-2"></i>
-            <strong>Đã xảy ra lỗi:</strong>
-            <ul class="mb-0 mt-2">
-                <?php foreach ($errors as $error): ?>
-                    <li><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
-
-    <!-- Form Card -->
-    <div class="card shadow-sm border-0 rounded-3 mb-4">
-        <div class="card-body p-4">
-            <form method="POST" action="/webbanhang/Product/save" enctype="multipart/form-data" onsubmit="return validateForm();" id="productForm">
-                <div class="row g-4">
-                    <!-- Form Left Column -->
-                    <div class="col-lg-8">
-                        <div class="mb-3">
-                            <label for="name" class="form-label fw-semibold">
-                                <i class="fas fa-box me-1"></i>Tên sản phẩm
-                            </label>
-                            <input type="text" id="name" name="name" class="form-control form-control-lg" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="description" class="form-label fw-semibold">
-                                <i class="fas fa-align-left me-1"></i>Mô tả sản phẩm
-                            </label>
-                            <textarea id="description" name="description" class="form-control" rows="5" required></textarea>
-                            <div class="form-text">Mô tả chi tiết về sản phẩm, tính năng và đặc điểm nổi bật.</div>
-                        </div>
-                    </div>
-
-                    <!-- Form Right Column -->
-                    <div class="col-lg-4">
-                        <div class="card bg-light border-0 h-100">
-                            <div class="card-body">
-                                <h5 class="card-title mb-3">
-                                    <i class="fas fa-cog me-1"></i>Thông tin cấu hình
-                                </h5>
-
-                                <div class="mb-3">
-                                    <label for="price" class="form-label fw-semibold">
-                                        <i class="fas fa-tag me-1"></i>Giá
-                                    </label>
-                                    <div class="input-group">
-                                        <input type="number" id="price" name="price" class="form-control" step="1000" min="0" required>
-                                        <span class="input-group-text">VND</span>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="category_id" class="form-label fw-semibold">
-                                        <i class="fas fa-folder me-1"></i>Danh mục
-                                    </label>
-                                    <select id="category_id" name="category_id" class="form-select" required>
-                                        <option value="" selected disabled>-- Chọn danh mục --</option>
-                                        <?php foreach ($categories as $category): ?>
-                                            <option value="<?= $category->id ?>"><?= htmlspecialchars($category->name, ENT_QUOTES, 'UTF-8') ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="image" class="form-label fw-semibold">
-                                        <i class="fas fa-image me-1"></i>Hình ảnh
-                                    </label>
-                                    <input type="file" id="image" name="image" class="form-control" accept="image/*">
-                                    <div class="form-text">Chọn hình ảnh với định dạng JPG, PNG hoặc GIF.</div>
-                                </div>
-
-                                <div class="image-preview mt-3 text-center d-none" id="imagePreview">
-                                    <img id="preview" class="img-thumbnail" style="max-height: 200px; max-width: 100%;">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-plus-circle me-2"></i>Thêm sản phẩm mới
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <form id="add-product-form">
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Tên sản phẩm" required>
+                                    <label for="name">Tên sản phẩm</label>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="form-floating mb-3">
+                                    <textarea id="description" name="description" class="form-control" placeholder="Mô tả sản phẩm" style="height: 120px" required></textarea>
+                                    <label for="description">Mô tả sản phẩm</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="number" id="price" name="price" class="form-control" step="1" min="0" placeholder="Giá sản phẩm" required>
+                                    <label for="price">Giá (VND)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select id="category_id" name="category_id" class="form-select" required>
+                                        <option value="" disabled selected>Chọn danh mục</option>
+                                        <!-- Các danh mục sẽ được tải từ API và hiển thị tại đây -->
+                                    </select>
+                                    <label for="category_id">Danh mục sản phẩm</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="/webbanhang/Product/list" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Quay lại
+                            </a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="fas fa-save me-2"></i>Lưu sản phẩm
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                
-                <!-- Form Actions -->
-                <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
-                    <button type="reset" class="btn btn-outline-secondary">
-                        <i class="fas fa-undo me-1"></i>Đặt lại
-                    </button>
-                    <button type="submit" class="btn btn-custom-primary">
-                        <i class="fas fa-save me-1"></i>Lưu sản phẩm
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Image Preview JavaScript -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const imageInput = document.getElementById('image');
-    const previewContainer = document.getElementById('imagePreview');
-    const preview = document.getElementById('preview');
+<?php include 'app/views/shares/footer.php'; ?>
 
-    imageInput.addEventListener('change', function() {
-        if (this.files && this.files[0]) {
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                preview.src = e.target.result;
-                previewContainer.classList.remove('d-none');
-            }
-            
-            reader.readAsDataURL(this.files[0]);
-        } else {
-            previewContainer.classList.add('d-none');
-        }
-    });
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Hiển thị loading spinner cho select
+    const categorySelect = document.getElementById('category_id');
+    categorySelect.innerHTML = '<option value="" disabled selected>Đang tải danh mục...</option>';
     
-    const validateForm = function() {
-        const name = document.getElementById('name').value;
-        const description = document.getElementById('description').value;
+    // Tải danh sách danh mục
+    fetch('/webbanhang/api/category')
+        .then(response => response.json())
+        .then(data => {
+            // Xóa loading option
+            categorySelect.innerHTML = '<option value="" disabled selected>Chọn danh mục</option>';
+            
+            // Thêm các danh mục
+            data.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                categorySelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Lỗi khi tải danh mục:', error);
+            categorySelect.innerHTML = '<option value="" disabled selected>Lỗi tải danh mục</option>';
+        });
+
+    // Xử lý form submit với validation
+    const form = document.getElementById('add-product-form');
+    
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        
+        // Basic validation
+        const name = document.getElementById('name').value.trim();
+        const description = document.getElementById('description').value.trim();
         const price = document.getElementById('price').value;
-        const category = document.getElementById('category_id').value;
+        const categoryId = categorySelect.value;
         
-        if (!name || !description || !price || !category) {
-            alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
-            return false;
+        // Reset validation styles
+        form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+        
+        let isValid = true;
+        
+        // Validate name
+        if (name === '') {
+            document.getElementById('name').classList.add('is-invalid');
+            isValid = false;
         }
         
-        return true;
-    };
-    
-    document.getElementById('productForm').onsubmit = validateForm;
+        // Validate description
+        if (description === '') {
+            document.getElementById('description').classList.add('is-invalid');
+            isValid = false;
+        }
+        
+        // Validate price
+        if (price === '' || isNaN(price) || parseFloat(price) < 0) {
+            document.getElementById('price').classList.add('is-invalid');
+            isValid = false;
+        }
+        
+        // Validate category
+        if (categoryId === '' || categoryId === null) {
+            categorySelect.classList.add('is-invalid');
+            isValid = false;
+        }
+        
+        if (!isValid) {
+            return;
+        }
+        
+        // Disable button and show loading state
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Đang xử lý...';
+        
+        // Collect form data
+        const formData = new FormData(this);
+        const jsonData = {};
+        formData.forEach((value, key) => {
+            jsonData[key] = value;
+        });
+
+        // Send data to API
+        fetch('/webbanhang/api/product', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Response:', data);
+            if (data.message === 'Product created successfully') {
+                // Show success notification
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thành công!',
+                    text: 'Sản phẩm đã được thêm thành công',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    location.href = '/webbanhang/Product/list';
+                });
+            } else {
+                // Show error notification
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Không thể thêm sản phẩm. Vui lòng kiểm tra lại thông tin.',
+                    confirmButtonColor: '#3085d6'
+                });
+                
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            }
+        })
+        .catch(error => {
+            console.error('Lỗi khi gửi dữ liệu:', error);
+            
+            // Show error notification
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: 'Đã xảy ra lỗi khi xử lý yêu cầu. Vui lòng thử lại sau.',
+                confirmButtonColor: '#3085d6'
+            });
+            
+            // Reset button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+        });
+    });
 });
 </script>
-
-<?php include 'app/views/shares/footer.php'; ?>

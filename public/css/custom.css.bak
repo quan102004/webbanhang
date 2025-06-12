@@ -1,0 +1,128 @@
+/* Custom styles for Product Management System */
+
+:root {
+    --primary: #3a5f8a;
+    --primary-hover: #2c4b6e;
+    --secondary: #f0ae2c;
+    --secondary-hover: #dea017;
+    --accent: #e55934;
+    --success: #2ecc71;
+    --danger: #e74c3c;
+    --warning: #f39c12;
+    --info: #3498db;
+    --dark: #2c3e50;
+    --light: #ecf0f1;
+    --gray: #7f8c8d;
+    --border-radius: 0.5rem;
+    --box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Gradient background for login and register pages */
+.gradient-custom {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+}
+
+/* Navigation & Header */
+.navbar-brand {
+    color: var(--primary) !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.navbar-brand span {
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar-custom {
+    box-shadow: var(--box-shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Card hover effects */
+.product-card {
+    transition: var(--transition);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    height: 100%;
+    border: 1px solid rgba(0,0,0,0.08);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow);
+}
+
+.btn-secondary:hover {
+    background-color: #d99b1e;
+    border-color: #d99b1e;
+    color: #333;
+}
+
+/* Form styling */
+.form-floating>.form-control:focus~label,
+.form-floating>.form-control:not(:placeholder-shown)~label {
+    color: #495057;
+}
+
+/* Improved validation styling */
+.was-validated .form-control:invalid {
+    border-color: var(--vhq-accent);
+    box-shadow: 0 0 0 0.2rem rgba(229, 89, 52, 0.25);
+}
+
+.was-validated .form-control:valid {
+    border-color: #1cc88a;
+    box-shadow: 0 0 0 0.2rem rgba(28, 200, 138, 0.25);
+}
+
+/* Checkout form styling */
+.checkout-form label {
+    font-weight: 500;
+}
+
+/* Footer styling */
+footer {
+    background-color: var(--vhq-dark);
+    color: var(--vhq-light);
+}
+
+/* Store brand badge */
+.vhq-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--vhq-primary);
+    color: white;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* Order confirmation success icon */
+.success-animation {
+    animation-duration: 2.5s;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+    color: var(--vhq-secondary);
+}
+
+/* Custom cards */
+.card-vhq {
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+.card-vhq .card-header {
+    background-color: var(--vhq-primary);
+    color: white;
+    border-radius: 10px 10px 0 0;
+}

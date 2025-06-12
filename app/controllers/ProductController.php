@@ -152,9 +152,14 @@ class ProductController
             throw new Exception("Có lỗi xảy ra khi tải lên hình ảnh.");
         }
         return $target_file;
-    }
-    public function addToCart($id)
+    }    public function addToCart($id)
     {
+        // Kiểm tra đăng nhập
+        if (!SessionHelper::isLoggedIn()) {
+            header('Location: /webbanhang/account/login');
+            exit;
+        }
+        
         $product = $this->productModel->getProductById($id);
         if (!$product) {
             echo "Không tìm thấy sản phẩm.";
@@ -174,15 +179,50 @@ class ProductController
             ];
         }
         header('Location: /webbanhang/Product/cart');
-    }
-    public function cart(){
+    }    public function cart(){
+        // Kiểm tra đăng nhập
+        if (!SessionHelper::isLoggedIn()) {
+            header('Location: /webbanhang/account/login');
+            exit;
+        }
+        
         $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
         include 'app/views/product/cart.php';
     }
-    public function checkout(){
-        include 'app/views/product/checkout.php';
+    
+    public function getCartCount() {
+        header('Content-Type: application/json');
+        // Nếu chưa đăng nhập, trả về 0
+        if (!SessionHelper::isLoggedIn()) {
+            echo json_encode(['count' => 0]);
+            return;
+        }
+        
+        $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+        $count = 0;
+        
+        foreach ($cart as $item) {
+            $count += $item['quantity'];
+        }
+        
+        echo json_encode(['count' => $count]);
     }
-    public function processCheckout(){
+    
+    public function checkout(){
+        // Kiểm tra đăng nhập
+        if (!SessionHelper::isLoggedIn()) {
+            header('Location: /webbanhang/account/login');
+            exit;
+        }
+        
+        include 'app/views/product/checkout.php';
+    }    public function processCheckout(){
+        // Kiểm tra đăng nhập
+        if (!SessionHelper::isLoggedIn()) {
+            header('Location: /webbanhang/account/login');
+            exit;
+        }
+        
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $name = $_POST['name'];
             $phone = $_POST['phone'];

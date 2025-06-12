@@ -63,6 +63,41 @@
 
 <!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Custom JS -->
+<script>
+// Global theme for SweetAlert2
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true
+});
+
+// Cập nhật số lượng sản phẩm trong giỏ hàng khi trang được tải
+document.addEventListener("DOMContentLoaded", function() {
+    // Hàm cập nhật số lượng sản phẩm trong giỏ hàng
+    function updateCartCount() {
+        fetch('/webbanhang/Product/getCartCount')
+            .then(response => response.json())
+            .then(data => {
+                const cartCountElement = document.getElementById('cart-count');
+                if (cartCountElement) {
+                    cartCountElement.textContent = data.count;
+                    cartCountElement.style.display = data.count > 0 ? 'inline-block' : 'none';
+                }
+            })
+            .catch(error => console.error('Lỗi khi cập nhật giỏ hàng:', error));
+    }
+    
+    // Cập nhật giỏ hàng khi trang được tải
+    updateCartCount();
+});
+</script>
 </body>
 
 </html>
