@@ -2,6 +2,7 @@
 require_once('app/config/database.php');
 require_once('app/models/ProductModel.php');
 require_once('app/models/CategoryModel.php');
+require_once('app/helpers/SessionHelper.php');
 class ProductController
 {
     private $productModel;
@@ -14,15 +15,26 @@ class ProductController
 
     private function isAdmin() {
         return SessionHelper::isAdmin();
-    }
-
-    public function index()
+    }    public function index()
     {
+        // Kiểm tra đăng nhập
+        if (!SessionHelper::isLoggedIn()) {
+            // Hiển thị trang thông báo đăng nhập với SweetAlert2
+            include 'app/views/product/login_required.php';
+            exit;
+        }
+        
         $products = $this->productModel->getProducts();
         include 'app/views/product/list.php';
-    }
-    public function show($id)
+    }public function show($id)
     {
+        // Kiểm tra đăng nhập
+        if (!SessionHelper::isLoggedIn()) {
+            // Hiển thị trang thông báo đăng nhập với SweetAlert2
+            include 'app/views/product/login_required.php';
+            exit;
+        }
+        
         $product = $this->productModel->getProductById($id);
         if ($product) {
             include 'app/views/product/show.php';

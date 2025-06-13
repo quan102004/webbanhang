@@ -1,0 +1,165 @@
+Array
+(
+    [0] => stdClass Object
+        (
+            [id] => 3
+            [name] => Laptop
+            [description] => 12312
+            [price] => 22222.00
+            [category_name] => Laptop
+        )
+
+    [1] => stdClass Object
+        (
+            [id] => 4
+            [name] => Laptop
+            [description] => A high-performance laptop
+            [price] => 1999.99
+            [category_name] => Điện thoại
+        )
+
+    [2] => stdClass Object
+        (
+            [id] => 6
+            [name] => Laptop
+            [description] => A high-performance laptop
+            [price] => 1999.99
+            [category_name] => Điện thoại
+        )
+
+    [3] => stdClass Object
+        (
+            [id] => 7
+            [name] => Iphon13
+            [description] => qew
+            [price] => 12000.00
+            [category_name] => Điện thoại
+        )
+
+    [4] => stdClass Object
+        (
+            [id] => 8
+            [name] => Laptop
+            [description] => A high-performance laptop
+            [price] => 1999.99
+            [category_name] => Điện thoại
+        )
+
+    [5] => stdClass Object
+        (
+            [id] => 9
+            [name] => Laptop
+            [description] => laptóp
+            [price] => 21000.00
+            [category_name] => Điện thoại
+        )
+
+    [6] => stdClass Object
+        (
+            [id] => 10
+            [name] => Laptop
+            [description] => A high-performance laptop
+            [price] => 1999.99
+            [category_name] => Điện thoại
+        )
+
+    [7] => stdClass Object
+        (
+            [id] => 11
+            [name] => Laptop
+            [description] => eqwewq
+            [price] => 12000.00
+            [category_name] => Điện thoại
+        )
+
+    [8] => stdClass Object
+        (
+            [id] => 12
+            [name] => Laptop
+            [description] => A high-performance laptop
+            [price] => 1999.99
+            [category_name] => Điện thoại
+        )
+
+    [9] => stdClass Object
+        (
+            [id] => 13
+            [name] => Laptop
+            [description] => A high-performance laptop
+            [price] => 1999.99
+            [category_name] => Điện thoại
+        )
+
+    [10] => stdClass Object
+        (
+            [id] => 14
+            [name] => Laptop
+            [description] => A high-performance laptop
+            [price] => 1999.99
+            [category_name] => Điện thoại
+        )
+
+    [11] => stdClass Object
+        (
+            [id] => 15
+            [name] => Laptop
+            [description] => A high-performance laptop
+            [price] => 1999.99
+            [category_name] => Điện thoại
+        )
+
+    [12] => stdClass Object
+        (
+            [id] => 16
+            [name] => Laptop
+            [description] => 2131232
+            [price] => 12000.00
+            [category_name] => Điện thoại
+        )
+
+    [13] => stdClass Object
+        (
+            [id] => 17
+            [name] => Laptop
+            [description] => A high-performance laptop
+            [price] => 1999.99
+            [category_name] => Điện thoại
+        )
+
+    [14] => stdClass Object
+        (
+            [id] => 18
+            [name] => Laptop
+            [description] => eqweqw
+            [price] => 120000.00
+            [category_name] => Điện thoại
+        )
+
+    [15] => stdClass Object
+        (
+            [id] => 19
+            [name] => Laptop
+            [description] => A high-performance laptop
+            [price] => 1999.99
+            [category_name] => Điện thoại
+        )
+
+    [16] => stdClass Object
+        (
+            [id] => 20
+            [name] => Laptop
+            [description] => A high-performance laptop
+            [price] => 1999.99
+            [category_name] => Điện thoại
+        )
+
+    [17] => stdClass Object
+        (
+            [id] => 21
+            [name] => Laptop
+            [description] => A high-performance laptop
+            [price] => 1999.99
+            [category_name] => Điện thoại
+        )
+
+)

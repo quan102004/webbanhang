@@ -20,10 +20,9 @@ LIMIT 0,1";
         }
         $query = "INSERT INTO " . $this->table_name . " SET username=:username,
 fullname=:fullname, password=:password, role=:role";
-        $stmt = $this->conn->prepare($query);
-        $username = htmlspecialchars(strip_tags($username));
+        $stmt = $this->conn->prepare($query);        $username = htmlspecialchars(strip_tags($username));
         $fullName = htmlspecialchars(strip_tags($fullName));
-        $password = password_hash($password, PASSWORD_BCRYPT);
+        // Không hash password ở đây vì nó đã được hash trong controller
         $role = htmlspecialchars(strip_tags($role));
         $stmt->bindParam(":username", $username);
         $stmt->bindParam(":fullname", $fullName);

@@ -102,7 +102,7 @@
     </style>
 </head>
 
-<body>    <nav class="navbar navbar-expand-lg navbar-custom">
+<body><nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">            <a class="navbar-brand" href="/webbanhang/">
                 <img src="/webbanhang/uploads/laptop.jpg" alt="Logo" width="40" height="40" class="d-inline-block align-text-top me-2 rounded">
                 <span>Quản lý sản phẩm</span>
@@ -187,3 +187,20 @@
             </nav>
         </div>
     </div>
+<script>
+     function logout() { 
+        localStorage.removeItem('jwtToken'); 
+        location.href = '/webbanhang/account/login'; 
+    } 
+ 
+    document.addEventListener("DOMContentLoaded", function() { 
+        const token = localStorage.getItem('jwtToken'); 
+        if (token) { 
+            document.getElementById('nav-login').style.display = 'none'; 
+            document.getElementById('nav-logout').style.display = 'block'; 
+        } else { 
+            document.getElementById('nav-login').style.display = 'block'; 
+            document.getElementById('nav-logout').style.display = 'none'; 
+        } 
+    }); 
+</script>
